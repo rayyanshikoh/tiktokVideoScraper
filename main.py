@@ -4,7 +4,7 @@ from urllib.request import urlopen
 
 url = 'https://www.tiktok.com/@storms.1/video/7314345106738253099'
 
-def downloadVideo(link, id):
+def downloadVideo(link, save_location, id):
     print(f"Downloading video {id} from: {link}")
     cookies = {
         '_ga': 'GA1.1.658076526.1703184174',
@@ -52,8 +52,9 @@ def downloadVideo(link, id):
 
     mp4File = urlopen(downloadLink)
     # Feel free to change the download directory
+    print(f"Saving video {id} to: {save_location}/{videoTitle}.mp4")
     
-    with open(f"videos/{videoTitle}.mp4", "wb") as output:
+    with open(f"{save_location}/{videoTitle}.mp4", "wb") as output:
         while True:
             data = mp4File.read(4096)
             if data:
@@ -62,15 +63,16 @@ def downloadVideo(link, id):
                 break
 
 
-while True:
-    print("Please paste the link of the video you want to download:")
-    url = input()
-    if url == "":
-        print("Please enter a valid URL, or type exit to quit")
-        continue
-    elif url == "exit":
-        break
-    else:
-        pass
-    downloadVideo(url, 1)
-    print("Video downloaded successfully!")
+if __name__ == "__main__":
+    while True:
+        print("Please paste the link of the video you want to download:")
+        url = input()
+        if url == "":
+            print("Please enter a valid URL, or type exit to quit")
+            continue
+        elif url == "exit":
+            break
+        else:
+            pass
+        downloadVideo(url, 1)
+        print("Video downloaded successfully!")
